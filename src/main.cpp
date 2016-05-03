@@ -9,7 +9,7 @@
 #include <Tools/client_socket.h>
 #include <Tools/utils.h>
 
-#include <INIReader.h>
+#include <inih/INIReader.h>
 
 #include <ReverseTale.h>
 #if HAVE_EXPERIMENTAL_FS

@@ -19,6 +19,8 @@ else()
     find_package(ReverseTale-Library   REQUIRED)
 endif()
 
+find_package(inih REQUIRED)
+
 # ---[ Add definitions and DLL
 if (NOT ${DEBUG})
 	add_definitions(-DNDEBUG)
@@ -27,7 +29,16 @@ endif()
 add_executable(ReverseTale-Headless ${Headless_SOURCES})
 
 # ---[ Link dependencies libraries
-target_link_libraries(ReverseTale-Headless ReverseTale-Library)
+target_link_libraries(ReverseTale-Headless
+    PUBLIC ReverseTale-Library
+    PUBLIC "$<TARGET_FILE:inih>"
+)
+
+get_target_property(INIH_INCLUDE_DIR inih INTERFACE_INCLUDE_DIRECTORIES)
+target_include_directories(ReverseTale-Headless
+  PUBLIC ${INIH_INCLUDE_DIR}
+  INTERFACE "$<INSTALL_INTERFACE:include>"
+)
 
 # ---[ Set C++11 standard
 set_property(TARGET ReverseTale-Headless PROPERTY CXX_STANDARD 11)
